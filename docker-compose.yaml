@@ -12,7 +12,7 @@ services:
     container_name: refinerdb
     hostname: refinerdb.network.com
     healthcheck:
-      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      test: 'pg_isready -h localhost -p 5432 -q -U postgres'
       interval: 30s
       timeout: 10s
       retries: 5
@@ -31,7 +31,7 @@ services:
       - ./config/config.ini:/opt/config/config.ini
       - ./config/connection-config-docker.yaml:/opt/config/connection-config.yaml
       - /opt/refiner/log:/root/refiner/log
-      - /YOUR PATH HERE/organizations:/opt/organizations
+      - ../blulabel-network/organizations:/opt/organizations
     command: sh -c "/opt/ledgerdata-refiner"
     ports:
       - 30052:30052

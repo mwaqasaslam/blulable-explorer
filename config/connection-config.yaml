@@ -1,10 +1,9 @@
 version: 1.0.0
 
 client:
-
   # Which organization does this application instance belong to? The value must be the name of an org
   # defined under "organizations"
-  organization: org1
+  organization: bluL1
 
   logging:
     level: info
@@ -18,7 +17,7 @@ client:
   credentialStore:
     # [Optional]. Used by user store. Not needed if all credentials are embedded in configuration
     # and enrollments are performed elswhere.
-    path: "/tmp/state-store"
+    path: '/tmp/state-store'
 
     # [Optional]. Specific to the CryptoSuite implementation used by GO SDK. Software-based implementations
     # requiring a key store. PKCS#11 based implementations does not.
@@ -31,8 +30,8 @@ client:
     security:
       enabled: true
       default:
-        provider: "SW"
-      hashAlgorithm: "SHA2"
+        provider: 'SW'
+      hashAlgorithm: 'SHA2'
       softVerify: true
       level: 256
 
@@ -52,10 +51,9 @@ client:
 # section.
 #
 channels:
-
-  mychannel:
+  blulabel:
     peers:
-      peer0.org1.example.com:
+      peer0.bluL1.example.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -86,23 +84,23 @@ channels:
 # list of participating organizations in this network
 #
 organizations:
-  org1:
-    mspid: Org1MSP
-    cryptoPath: peerOrganizations/org1.example.com/users/{username}@org1.example.com/msp
+  bluL1:
+    mspid: bluL1MSP
+    cryptoPath: peerOrganizations/bluL1.example.com/users/{username}@bluL1.example.com/msp
     # peer
     peers:
-      - peer0.org1.example.com
+      - peer0.bluL1.example.com
     # ca
     certificateAuthorities:
-      - ca.org1.example.com
+      - ca.bluL1.example.com
 
     users:
       Admin:
         cert:
-          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem
+          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/users/Admin@bluL1.example.com/msp/signcerts/cert.pem
       User1:
         cert:
-          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/cert.pem
+          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/users/User1@bluL1.example.com/msp/signcerts/cert.pem
 
   ordererorg:
     mspID: OrdererMSP
@@ -113,7 +111,6 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-
   orderer.example.com:
     # [Optional] Default: Infer from hostname
     url: orderer.example.com:7050
@@ -154,18 +151,17 @@ peers:
       # allow-insecure will be taken into consideration if address has no protocol defined, if true then grpc or else grpcs
       allow-insecure: false
 
-  peer0.org1.example.com:
+  peer0.bluL1.example.com:
     # this URL is used to send endorsement and query requests
     # [Optional] Default: Infer from hostname
-    url: peer0.org1.example.com:7051
+    url: peer0.bluL1.example.com:7051
 
     grpcOptions:
-      ssl-target-name-override: peer0.org1.example.com
+      ssl-target-name-override: peer0.bluL1.example.com
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
-
+      path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/tlsca/tlsca.bluL1.example.com-cert.pem
 
 #
 # Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
@@ -173,18 +169,18 @@ peers:
 # Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
 #
 certificateAuthorities:
-  ca.org1.example.com:
+  ca.bluL1.example.com:
     # [Optional] Default: Infer from hostname
-    url: https://ca.org1.example.com:7054
+    url: https://ca.bluL1.example.com:7054
     tlsCACerts:
       # Comma-Separated list of paths
-      path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/tlsca/tlsca.bluL1.example.com-cert.pem
       # Client key and cert for SSL handshake with Fabric CA
       client:
         key:
-          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/peers/peer0.bluL1.example.com/tls/server.key
         cert:
-          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+          path: ${FABRIC_PROJECT_PATH}/${CRYPTOCONFIG_PATH}/peerOrganizations/bluL1.example.com/peers/peer0.bluL1.example.com/tls/server.crt
 
     # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
     # needed to enroll and invoke new users.
@@ -192,15 +188,14 @@ certificateAuthorities:
       enrollId: admin
       enrollSecret: adminpw
     # [Optional] The optional name of the CA.
-    caName: ca_org1
-
+    caName: ca_bluL1
 
 entityMatchers:
   peer:
-    - pattern: (\w+).org1.example.(\w+)
+    - pattern: (\w+).bluL1.example.(\w+)
       urlSubstitutionExp: localhost:7051
-      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
-      mappedHost: peer0.org1.example.com
+      sslTargetOverrideUrlSubstitutionExp: peer0.bluL1.example.com
+      mappedHost: peer0.bluL1.example.com
 
   orderer:
     - pattern: (\w+).example.(\w+)
@@ -209,6 +204,6 @@ entityMatchers:
       mappedHost: orderer.example.com
 
   certificateAuthority:
-    - pattern: (\w+).org1.example.(\w+)
+    - pattern: (\w+).bluL1.example.(\w+)
       urlSubstitutionExp: localhost:7054
-      mappedHost: ca.org1.example.com
+      mappedHost: ca.bluL1.example.com
